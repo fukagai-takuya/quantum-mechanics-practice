@@ -1,0 +1,108 @@
+﻿<metro:MetroWindow x:Class="HydrogenAtomSchrodinger.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:local_utilities="clr-namespace:HydrogenAtomSchrodinger.Utilities"
+        TitleCharacterCasing="Normal"
+        SaveWindowPosition="True"
+        Title="{Binding Title}" WindowState="Maximized" >
+
+    <Window.Resources>
+        <local_utilities:RadioButtonConverter x:Key="EnumConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVisible" />
+    </Window.Resources>
+
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Left">
+            <GroupBox Margin="5" FontSize="16" Style="{StaticResource MaterialDesignCardGroupBox}">
+                <GroupBox.Header>
+                    <Label Foreground="White">
+                        Principal Quantum Number (n)
+                    </Label>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Margin="0,0,5,0" GroupName="PQN" Content="1" IsChecked="{Binding PrincipalQuantumNumber, ConverterParameter=PQN1, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Margin="0,0,5,0" GroupName="PQN" Content="2" IsChecked="{Binding PrincipalQuantumNumber, ConverterParameter=PQN2, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Margin="0,0,5,0" GroupName="PQN" Content="3" IsChecked="{Binding PrincipalQuantumNumber, ConverterParameter=PQN3, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Margin="0,0,5,0" GroupName="PQN" Content="4" IsChecked="{Binding PrincipalQuantumNumber, ConverterParameter=PQN4, Converter={StaticResource EnumConverter}}"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Margin="5" FontSize="16" Style="{StaticResource MaterialDesignCardGroupBox}">
+                <GroupBox.Header>
+                    <Label Foreground="White">
+                        Azimuthal Quantum Number (l)
+                    </Label>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Margin="0,0,5,0" GroupName="AQN" Content="0" IsChecked="{Binding AzimuthalQuantumNumber, ConverterParameter=AQN0, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Visibility="{Binding AQN1_Visible, Converter={StaticResource BoolToVisible}}" Margin="0,0,5,0" GroupName="AQN" Content="1" IsChecked="{Binding AzimuthalQuantumNumber, ConverterParameter=AQN1, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Visibility="{Binding AQN2_Visible, Converter={StaticResource BoolToVisible}}" Margin="0,0,5,0" GroupName="AQN" Content="2" IsChecked="{Binding AzimuthalQuantumNumber, ConverterParameter=AQN2, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Visibility="{Binding AQN3_Visible, Converter={StaticResource BoolToVisible}}" Margin="0,0,5,0" GroupName="AQN" Content="3" IsChecked="{Binding AzimuthalQuantumNumber, ConverterParameter=AQN3, Converter={StaticResource EnumConverter}}"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Margin="5" FontSize="16" Style="{StaticResource MaterialDesignCardGroupBox}">
+                <GroupBox.Header>
+                    <Label Foreground="White">
+                        Magnetic Quantum Number (m)
+                    </Label>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Visibility="{Binding MQN3_Visible, Converter={StaticResource BoolToVisible}}" Margin="0,0,5,0" GroupName="MQN" Content="-3" IsChecked="{Binding MagneticQuantumNumber, ConverterParameter=MQN_N3, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Visibility="{Binding MQN2_Visible, Converter={StaticResource BoolToVisible}}" Margin="0,0,5,0" GroupName="MQN" Content="-2" IsChecked="{Binding MagneticQuantumNumber, ConverterParameter=MQN_N2, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Visibility="{Binding MQN1_Visible, Converter={StaticResource BoolToVisible}}" Margin="0,0,5,0" GroupName="MQN" Content="-1" IsChecked="{Binding MagneticQuantumNumber, ConverterParameter=MQN_N1, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Margin="0,0,5,0" GroupName="MQN" Content="0" IsChecked="{Binding MagneticQuantumNumber, ConverterParameter=MQN0, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Visibility="{Binding MQN1_Visible, Converter={StaticResource BoolToVisible}}" Margin="0,0,5,0" GroupName="MQN" Content="1" IsChecked="{Binding MagneticQuantumNumber, ConverterParameter=MQN_P1, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Visibility="{Binding MQN2_Visible, Converter={StaticResource BoolToVisible}}" Margin="0,0,5,0" GroupName="MQN" Content="2" IsChecked="{Binding MagneticQuantumNumber, ConverterParameter=MQN_P2, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Visibility="{Binding MQN3_Visible, Converter={StaticResource BoolToVisible}}" Margin="0,0,5,0" GroupName="MQN" Content="3" IsChecked="{Binding MagneticQuantumNumber, ConverterParameter=MQN_P3, Converter={StaticResource EnumConverter}}"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Margin="5" FontSize="16" Style="{StaticResource MaterialDesignCardGroupBox}">
+                <GroupBox.Header>
+                    <TextBlock Foreground="White">
+                        Plot Area Length (Bohr Radius = 1.0)
+                    </TextBlock>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Margin="0,0,5,0" GroupName="BRS" Content="5" IsChecked="{Binding BohrRadiusScale, ConverterParameter=BRS5, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Margin="0,0,5,0" GroupName="BRS" Content="10" IsChecked="{Binding BohrRadiusScale, ConverterParameter=BRS10, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Margin="0,0,5,0" GroupName="BRS" Content="20" IsChecked="{Binding BohrRadiusScale, ConverterParameter=BRS20, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Margin="0,0,5,0" GroupName="BRS" Content="40" IsChecked="{Binding BohrRadiusScale, ConverterParameter=BRS40, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Margin="0,0,5,0" GroupName="BRS" Content="80" IsChecked="{Binding BohrRadiusScale, ConverterParameter=BRS80, Converter={StaticResource EnumConverter}}"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Margin="5" FontSize="16" Style="{StaticResource MaterialDesignCardGroupBox}">
+                <GroupBox.Header>
+                    <TextBlock Foreground="White">
+                        Color Map
+                    </TextBlock>
+                </GroupBox.Header>
+                <ComboBox DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"
+                    ItemsSource="{Binding ColorMaps}" SelectedItem="{Binding SelectedColorMap}" />
+            </GroupBox>
+
+            <GroupBox Margin="5" FontSize="16" Style="{StaticResource MaterialDesignCardGroupBox}">
+                <GroupBox.Header>
+                    <TextBlock Foreground="White">
+                        Change Max Value
+                    </TextBlock>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Margin="0,0,5,0" GroupName="MAXVALUE" Content="Default" IsChecked="{Binding MaxValueType, ConverterParameter=MV_DEFAULT, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Margin="0,0,5,0" GroupName="MAXVALUE" Content="0.01" IsChecked="{Binding MaxValueType, ConverterParameter=MV_001, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Margin="0,0,5,0" GroupName="MAXVALUE" Content="0.001" IsChecked="{Binding MaxValueType, ConverterParameter=MV_0001, Converter={StaticResource EnumConverter}}"/>
+                    <RadioButton Margin="0,0,5,0" GroupName="MAXVALUE" Content="0.0001" IsChecked="{Binding MaxValueType, ConverterParameter=MV_00001, Converter={StaticResource EnumConverter}}"/>
+                </StackPanel>
+            </GroupBox>
+
+        </StackPanel>
+
+        <Image Source="{Binding ImageSource}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5"/>
+
+    </DockPanel>
+</metro:MetroWindow>
