@@ -30,6 +30,8 @@ namespace HydrogenAtomSchrodinger.ViewModels
             get { return _hydrogenAtomWaveFunction.PrincipalQuantumNumber; }
             set
             {
+                _updatingPrincipalQuantumNumber = true;
+
                 switch (value)
                 {
                     case PrincipalQuantumNumberEnum.PQN1:
@@ -53,16 +55,23 @@ namespace HydrogenAtomSchrodinger.ViewModels
                         AQN3_Visible = true;
                         break;
                 }
+
                 AzimuthalQuantumNumber = AzimuthalQuantumNumberEnum.AQN0;
+                _updatingPrincipalQuantumNumber = false;
+
                 SetProperty(ref _hydrogenAtomWaveFunction.PrincipalQuantumNumber, value);
             }
         }
+
+        private bool _updatingPrincipalQuantumNumber;
 
         public AzimuthalQuantumNumberEnum AzimuthalQuantumNumber
         {
             get { return _hydrogenAtomWaveFunction.AzimuthalQuantumNumber; }
             set
             {
+                _updatingAzimuthalQuantumNumber = true;
+
                 switch (value)
                 {
                     case AzimuthalQuantumNumberEnum.AQN0:
@@ -86,10 +95,15 @@ namespace HydrogenAtomSchrodinger.ViewModels
                         MQN3_Visible = true;
                         break;
                 }
+
                 MagneticQuantumNumber = MagneticQuantumNumberEnum.MQN0;
+                _updatingAzimuthalQuantumNumber = false;
+
                 SetProperty(ref _hydrogenAtomWaveFunction.AzimuthalQuantumNumber, value);
             }
         }
+
+        private bool _updatingAzimuthalQuantumNumber;
 
         public MagneticQuantumNumberEnum MagneticQuantumNumber
         {
@@ -239,12 +253,16 @@ namespace HydrogenAtomSchrodinger.ViewModels
 
         public MainWindowViewModel()
         {
-            ImageSource = _heatMapRenderer.Render(_hydrogenAtomWaveFunction);
             PropertyChanged += UpdateImageWithPropertyChanged;
         }
 
         private void UpdateImageWithPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            if (_updatingPrincipalQuantumNumber || _updatingAzimuthalQuantumNumber)
+            {
+                return;
+            }
+
             if (e.PropertyName != nameof(ImageSource))
             {
                 _hydrogenAtomWaveFunction.UpdateHydrogenAtomWaveFunction();

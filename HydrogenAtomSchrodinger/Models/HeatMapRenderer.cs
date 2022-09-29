@@ -1,4 +1,8 @@
-﻿using System.Windows.Media.Imaging;
+﻿#define USE_PARALLEL
+// #define CHECK_ELAPSED_TIME
+
+using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace HydrogenAtomSchrodinger.Models
 {
@@ -41,6 +45,22 @@ namespace HydrogenAtomSchrodinger.Models
             var plt = new ScottPlot.Plot(PixelWidth, PixelHeight);
             double[,] intensities = new double[PixelHeight, PixelWidth];
 
+#if CHECK_ELAPSED_TIME
+            var sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
+#endif
+
+#if USE_PARALLEL
+            Parallel.For(0, PixelHeight, h =>
+            {
+                for (int w = 0; w < PixelWidth; w++)
+                {
+                    double x = PlotAreaLength * ((double)w / PixelWidth - 0.5);
+                    double z = PlotAreaLength * ((double)h / PixelHeight - 0.5);
+                    intensities[h, w] = hydrogenAtomWaveFunction.GetProbabilityDensityFromXZ(x, z);
+                }
+            });
+#else
             for (int h = 0; h < PixelHeight; h++)
             {
                 for (int w = 0; w < PixelWidth; w++)
@@ -50,6 +70,12 @@ namespace HydrogenAtomSchrodinger.Models
                     intensities[h, w] = hydrogenAtomWaveFunction.GetProbabilityDensityFromXZ(x, z);
                 }
             }
+#endif
+
+#if CHECK_ELAPSED_TIME
+            sw.Stop();
+            System.Windows.MessageBox.Show($"{sw.Elapsed}");
+#endif
 
             var hm = plt.AddHeatmap(intensities, SelectedColorMap, lockScales: false);
             hm.CellWidth = PlotAreaLength / PixelWidth;
