@@ -1,5 +1,4 @@
 ﻿#define USE_PARALLEL
-// #define CHECK_ELAPSED_TIME
 
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
@@ -45,11 +44,6 @@ namespace HydrogenAtomSchrodinger.Models
             var plt = new ScottPlot.Plot(PixelWidth, PixelHeight);
             double[,] intensities = new double[PixelHeight, PixelWidth];
 
-#if CHECK_ELAPSED_TIME
-            var sw = new System.Diagnostics.Stopwatch();
-            sw.Start();
-#endif
-
 #if USE_PARALLEL
             Parallel.For(0, PixelHeight, h =>
             {
@@ -70,11 +64,6 @@ namespace HydrogenAtomSchrodinger.Models
                     intensities[h, w] = hydrogenAtomWaveFunction.GetProbabilityDensityFromXZ(x, z);
                 }
             }
-#endif
-
-#if CHECK_ELAPSED_TIME
-            sw.Stop();
-            System.Windows.MessageBox.Show($"{sw.Elapsed}");
 #endif
 
             var hm = plt.AddHeatmap(intensities, SelectedColorMap, lockScales: false);
