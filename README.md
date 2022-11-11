@@ -2,7 +2,7 @@
 
 I wrote this program with Visual Studio 2022.
 
-This program plot the probability density functions of an electron in a hydrogen atom
+This program plots the probability density functions of an electron in a hydrogen atom
 using WPF, Material Design In XAML Toolkit, MahApps.Metro, Prism, and ScottPlot.
 
 # about this program
