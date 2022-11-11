@@ -105,4 +105,5 @@
         <Image Source="{Binding ImageSource}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5"/>
 
     </DockPanel>
+
 </metro:MetroWindow>
